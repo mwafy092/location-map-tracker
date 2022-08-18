@@ -17,7 +17,7 @@
 
                 <label>
                     المدن
-                    <select>
+                    <select v-model="selectedCity">
                         <option value="" selected disabled hidden>
                             اختار المدينه
                         </option>
@@ -26,17 +26,23 @@
                         </option>
                     </select>
                 </label>
-                <button @click="fetchCountryList()">
+                <button @click="fetchPlacesForCity()">
                     اعرض النتائج
                     <img src="./assets/arrow.svg" />
                 </button>
             </div>
-            <div class="col-8">Map</div>
+            <div class="col-8 map__container">
+                <Map
+                    :lat="ipData?.location?.lat"
+                    :lng="ipData?.location?.lng"
+                />
+            </div>
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios';
+import Map from './components/Map.vue';
 
 export default {
     name: 'App',
@@ -44,8 +50,13 @@ export default {
         return {
             countries: [],
             selectedCountry: '',
+            selectedCity: '',
             countryStates: {},
+            cityPlaces: [],
         };
+    },
+    components: {
+        Map,
     },
     methods: {
         fetchCountryList() {
@@ -54,6 +65,13 @@ export default {
             ).then((data) => {
                 this.countries = Object.keys(data.data);
                 this.countryStates = data.data;
+            });
+        },
+        fetchPlacesForCity() {
+            axios(
+                `https://nominatim.openstreetmap.org/search?q=${this.selectedCity}&format=json`
+            ).then((data) => {
+                this.cityPlaces = data.data;
             });
         },
     },
