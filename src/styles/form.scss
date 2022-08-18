@@ -1,0 +1,56 @@
+.form__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f4f5f6 0% 0% no-repeat padding-box;
+    h1 {
+        font-size: 36px;
+        align-self: flex-start;
+        padding: 0 40px;
+        margin: 25px 0;
+    }
+
+    label {
+        display: block;
+        font-size: 22px;
+        font-weight: bold;
+        margin: 25px;
+    }
+    select {
+        font-size: 18px;
+        color: #363636;
+        cursor: pointer;
+        display: block;
+        width: 320px;
+        height: 64px;
+        background: #ffffff 0% 0% no-repeat padding-box;
+        border: 1px solid #dbdbdb;
+        border-radius: 14px;
+        padding: 0 10px;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: left 1rem center;
+        background-size: 1em;
+    }
+    option {
+        font-size: 18px;
+        font-weight: normal;
+    }
+    button {
+        width: 320px;
+        height: 64px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid #000000;
+        border-radius: 14px;
+        font-size: 22px;
+        font-weight: bold;
+        margin: 25px 0;
+        img {
+            width: 34px;
+        }
+    }
+}
