@@ -3,7 +3,7 @@
         <l-map
             v-model="zoom"
             v-model:zoom="zoom"
-            :center="[this.location.lat || 0, this.location.lng || 0]"
+            :center="locations[0]"
             @move="log('move')"
         >
             <l-tile-layer
@@ -12,13 +12,35 @@
             <LControlLayers />
 
             <l-marker
-                :lat-lng="[
-                    [45.51, -122.68],
-                    [37.77, -122.43],
-                    [34.04, -118.2],
-                ]"
+                v-for="location of locations"
+                :lat-lng="location"
+                :key="location"
             >
                 <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
+                <LPopup
+                    :options="{
+                        closeButton: false,
+                        keepInView: true,
+                    }"
+                >
+                    <div class="map__pop">
+                        <img src="../assets/download.jpg" class="main__img" />
+                        <p class="pop__title">
+                            هيئة قضايا الدولة, فرع التجمع الخامس
+                        </p>
+                        <p class="pop__info">
+                            <img src="../assets/gray-location.png" width="16" />
+                            <span>شارع جامعة الدول العربية المهندسين42</span>
+                        </p>
+                        <p class="pop__info">
+                            <img src="../assets/phone.png" width="16" />
+                            <span style="direction: ltr">02 - 37617046</span>
+                        </p>
+                        <button @click="fetchPlacesForCity()">
+                            اعرف الاتجاهات <img src="../assets/arrow.svg" />
+                        </button>
+                    </div>
+                </LPopup>
             </l-marker>
         </l-map>
     </div>
@@ -39,7 +61,7 @@ import {
 import 'leaflet/dist/leaflet.css';
 export default {
     name: 'Map',
-    props: ['lat', 'lng'],
+    props: ['locations'],
     components: {
         LMap,
         LIcon,

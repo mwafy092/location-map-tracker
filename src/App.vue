@@ -31,11 +31,9 @@
                     <img src="./assets/arrow.svg" />
                 </button>
             </div>
+
             <div class="col-8 map__container">
-                <Map
-                    :lat="ipData?.location?.lat"
-                    :lng="ipData?.location?.lng"
-                />
+                <Map :locations="cityPlaces" />
             </div>
         </div>
     </div>
@@ -52,7 +50,7 @@ export default {
             selectedCountry: '',
             selectedCity: '',
             countryStates: {},
-            cityPlaces: [],
+            cityPlaces: [[0, 0]],
         };
     },
     components: {
@@ -71,7 +69,11 @@ export default {
             axios(
                 `https://nominatim.openstreetmap.org/search?q=${this.selectedCity}&format=json`
             ).then((data) => {
-                this.cityPlaces = data.data;
+                console.log(data.data);
+                let newDataMap = data.data.map((d) => {
+                    return [d.lat, d.lon];
+                });
+                this.cityPlaces = newDataMap;
             });
         },
     },
