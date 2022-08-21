@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row data__container">
-            <div class="col-4 form__container">
+            <div class="col-12 col-lg-4 form__container">
                 <h1>دليل الهيئة</h1>
                 <label>
                     الدول
@@ -32,7 +32,7 @@
                 </button>
             </div>
 
-            <div class="col-8 map__container">
+            <div class="col-12 col-lg-8 map__container">
                 <Map :locations="cityPlaces" />
             </div>
         </div>
