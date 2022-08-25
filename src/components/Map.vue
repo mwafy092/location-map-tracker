@@ -1,5 +1,14 @@
 <template>
     <div style="height: 100%; width: 100%">
+        <button
+            class="map__convert"
+            @click="convertMap"
+        >
+            <img
+                src="../assets/map.png"
+                alt="map button"
+            />
+        </button>
         <l-map
             v-model="zoom"
             v-model:zoom="zoom"
@@ -7,8 +16,14 @@
             @move="log('move')"
         >
             <l-tile-layer
+                v-if="satellite"
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            ></l-tile-layer>
+            <l-tile-layer
+                v-else
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             ></l-tile-layer>
+
             <LControlLayers />
 
             <l-marker
@@ -16,7 +31,10 @@
                 :lat-lng="location"
                 :key="location"
             >
-                <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
+                <l-icon
+                    :icon-url="iconUrl"
+                    :icon-size="iconSize"
+                />
                 <LPopup
                     :options="{
                         closeButton: false,
@@ -24,16 +42,25 @@
                     }"
                 >
                     <div class="map__pop">
-                        <img src="../assets/download.jpg" class="main__img" />
+                        <img
+                            src="../assets/download.jpg"
+                            class="main__img"
+                        />
                         <p class="pop__title">
                             هيئة قضايا الدولة, فرع التجمع الخامس
                         </p>
                         <p class="pop__info">
-                            <img src="../assets/gray-location.png" width="16" />
+                            <img
+                                src="../assets/gray-location.png"
+                                width="16"
+                            />
                             <span>شارع جامعة الدول العربية المهندسين42</span>
                         </p>
                         <p class="pop__info">
-                            <img src="../assets/phone.png" width="16" />
+                            <img
+                                src="../assets/phone.png"
+                                width="16"
+                            />
                             <span style="direction: ltr">02 - 37617046</span>
                         </p>
                         <button @click="fetchPlacesForCity()">
@@ -79,6 +106,7 @@ export default {
             zoom: 5,
             iconWidth: 40,
             iconHeight: 50,
+            satellite: false,
         };
     },
     computed: {
@@ -94,6 +122,9 @@ export default {
     },
     mounted() {},
     methods: {
+        convertMap() {
+            this.satellite = !this.satellite;
+        },
         log(a) {
             console.log(a);
         },

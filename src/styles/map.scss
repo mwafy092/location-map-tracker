@@ -47,3 +47,14 @@
         }
     }
 }
+
+.map__convert {
+    position: absolute;
+    z-index: 99999;
+    background-color: transparent;
+    border: none;
+    top: 80px;
+    img {
+        width: 50px;
+    }
+}

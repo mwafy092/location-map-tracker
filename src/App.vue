@@ -2,34 +2,52 @@
     <div class="container-fluid">
         <div class="row data__container">
             <div class="col-12 col-lg-4 form__container">
-                <h1>دليل الهيئة</h1>
-                <label>
-                    الدول
-                    <select v-model="selectedCountry">
-                        <option value="" selected disabled hidden>
-                            اختار الدوله
-                        </option>
-                        <option v-for="country in countries" :key="country">
-                            {{ country }}
-                        </option>
-                    </select>
-                </label>
+                <div class="inner__form__container">
+                    <h1>دليل الهيئة</h1>
+                    <label>
+                        الدول
+                        <select v-model="selectedCountry">
+                            <option
+                                value=""
+                                selected
+                                disabled
+                                hidden
+                            >
+                                اختار الدوله
+                            </option>
+                            <option
+                                v-for="country in countries"
+                                :key="country"
+                            >
+                                {{ country }}
+                            </option>
+                        </select>
+                    </label>
 
-                <label>
-                    المدن
-                    <select v-model="selectedCity">
-                        <option value="" selected disabled hidden>
-                            اختار المدينه
-                        </option>
-                        <option v-for="state in getCountryStates" :key="state">
-                            {{ state }}
-                        </option>
-                    </select>
-                </label>
-                <button @click="fetchPlacesForCity()">
-                    اعرض النتائج
-                    <img src="./assets/arrow.svg" />
-                </button>
+                    <label>
+                        المدن
+                        <select v-model="selectedCity">
+                            <option
+                                value=""
+                                selected
+                                disabled
+                                hidden
+                            >
+                                اختار المدينه
+                            </option>
+                            <option
+                                v-for="state in getCountryStates"
+                                :key="state"
+                            >
+                                {{ state }}
+                            </option>
+                        </select>
+                    </label>
+                    <button @click="fetchPlacesForCity()">
+                        اعرض النتائج
+                        <img src="./assets/arrow.svg" />
+                    </button>
+                </div>
             </div>
 
             <div class="col-12 col-lg-8 map__container">
