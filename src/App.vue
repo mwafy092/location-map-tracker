@@ -3,8 +3,8 @@
         <div class="row data__container">
             <div class="col-12 col-lg-4 form__container">
                 <div class="inner__form__container">
-                    <h1>دليل الهيئة</h1>
                     <form @submit.prevent="fetchPlacesForCity()">
+                        <h1>دليل الهيئة</h1>
                         <label>
                             الدول
                             <select v-model="selectedCountry">
@@ -144,6 +144,12 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+@font-face {
+    font-family: 'cairo';
+    src: local('cairo'),
+        url(@/fonts/Cairo-VariableFont_wght.ttf) format('truetype');
+}
+
 @import './styles/main.scss';
 @import './styles/form.scss';
 </style>
