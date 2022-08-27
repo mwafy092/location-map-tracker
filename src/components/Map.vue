@@ -24,7 +24,7 @@
             ></l-tile-layer>
             <l-tile-layer
                 v-else
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
             ></l-tile-layer>
 
             <LControlLayers />
