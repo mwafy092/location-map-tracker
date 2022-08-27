@@ -4,49 +4,68 @@
             <div class="col-12 col-lg-4 form__container">
                 <div class="inner__form__container">
                     <h1>دليل الهيئة</h1>
-                    <label>
-                        الدول
-                        <select v-model="selectedCountry">
-                            <option
-                                value=""
-                                selected
-                                disabled
-                                hidden
+                    <form @submit.prevent="fetchPlacesForCity()">
+                        <label>
+                            الدول
+                            <select v-model="selectedCountry">
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                    hidden
+                                >
+                                    اختار الدوله
+                                </option>
+                                <option
+                                    v-for="country in countries"
+                                    :key="country"
+                                >
+                                    {{ country }}
+                                </option>
+                            </select>
+                            <p
+                                v-if="
+                                    v$.selectedCountry.required.$invalid &&
+                                    isSubmitted
+                                "
+                                class="error"
                             >
-                                اختار الدوله
-                            </option>
-                            <option
-                                v-for="country in countries"
-                                :key="country"
+                                برجاء اختيار الدوله
+                            </p>
+                        </label>
+                        <label>
+                            المدن
+                            <select v-model="selectedCity">
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                    hidden
+                                >
+                                    اختار المدينه
+                                </option>
+                                <option
+                                    v-for="state in getCountryStates"
+                                    :key="state"
+                                >
+                                    {{ state }}
+                                </option>
+                            </select>
+                            <p
+                                v-if="
+                                    v$.selectedCity.required.$invalid &&
+                                    isSubmitted
+                                "
+                                class="error"
                             >
-                                {{ country }}
-                            </option>
-                        </select>
-                    </label>
-
-                    <label>
-                        المدن
-                        <select v-model="selectedCity">
-                            <option
-                                value=""
-                                selected
-                                disabled
-                                hidden
-                            >
-                                اختار المدينه
-                            </option>
-                            <option
-                                v-for="state in getCountryStates"
-                                :key="state"
-                            >
-                                {{ state }}
-                            </option>
-                        </select>
-                    </label>
-                    <button @click="fetchPlacesForCity()">
-                        اعرض النتائج
-                        <img src="./assets/arrow.svg" />
-                    </button>
+                                برجاء اختيار المدينه
+                            </p>
+                        </label>
+                        <button>
+                            اعرض النتائج
+                            <img src="./assets/arrow.svg" />
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -59,9 +78,14 @@
 <script>
 import axios from 'axios';
 import Map from './components/Map.vue';
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 
 export default {
     name: 'App',
+    setup() {
+        return { v$: useVuelidate() };
+    },
     data() {
         return {
             countries: [],
@@ -69,6 +93,17 @@ export default {
             selectedCity: '',
             countryStates: {},
             cityPlaces: [[0, 0]],
+            isSubmitted: false,
+        };
+    },
+    validations() {
+        return {
+            selectedCountry: {
+                required,
+            },
+            selectedCity: {
+                required,
+            },
         };
     },
     components: {
@@ -84,15 +119,18 @@ export default {
             });
         },
         fetchPlacesForCity() {
-            axios(
-                `https://nominatim.openstreetmap.org/search?q=${this.selectedCity}&format=json`
-            ).then((data) => {
-                console.log(data.data);
-                let newDataMap = data.data.map((d) => {
-                    return [d.lat, d.lon];
+            this.isSubmitted = true;
+            if (this.selectedCity && this.selectedCountry) {
+                axios(
+                    `https://nominatim.openstreetmap.org/search?q=${this.selectedCity}&format=json`
+                ).then((data) => {
+                    console.log(data.data);
+                    let newDataMap = data.data.map((d) => {
+                        return [d.lat, d.lon];
+                    });
+                    this.cityPlaces = newDataMap;
                 });
-                this.cityPlaces = newDataMap;
-            });
+            }
         },
     },
     mounted() {
