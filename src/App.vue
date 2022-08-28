@@ -45,7 +45,10 @@
                                 >
                                     اختار المدينه
                                 </option>
-                                <option v-if="getCountryStates?.length === 0">
+                                <option
+                                    v-if="getCountryStates?.length === 0"
+                                    disabled
+                                >
                                     لا يوجد مدن
                                 </option>
                                 <option
