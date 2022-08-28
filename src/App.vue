@@ -35,6 +35,7 @@
                         </label>
                         <label>
                             المدن
+
                             <select v-model="selectedCity">
                                 <option
                                     value=""
@@ -51,6 +52,15 @@
                                     {{ state }}
                                 </option>
                             </select>
+                            <p
+                                class="error"
+                                v-if="
+                                    getCountryStates?.length === 0 ||
+                                    getCountryStates === null
+                                "
+                            >
+                                لايوجد بيانات للمدن
+                            </p>
                             <p
                                 v-if="
                                     v$.selectedCity.required.$invalid &&
