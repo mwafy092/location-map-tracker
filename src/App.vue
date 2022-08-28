@@ -45,6 +45,9 @@
                                 >
                                     اختار المدينه
                                 </option>
+                                <option v-if="getCountryStates?.length === 0">
+                                    لا يوجد مدن
+                                </option>
                                 <option
                                     v-for="state in getCountryStates"
                                     :key="state"
