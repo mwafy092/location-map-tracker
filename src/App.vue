@@ -12,7 +12,6 @@
                                     value=""
                                     selected
                                     disabled
-                                    hidden
                                 >
                                     اختار الدوله
                                 </option>
@@ -154,7 +153,7 @@ export default {
     },
     computed: {
         getCountryStates() {
-            return this.countryStates[this.selectedCountry];
+            return this.countryStates[this.selectedCountry] || [];
         },
     },
 };
